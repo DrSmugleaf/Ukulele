@@ -2,9 +2,8 @@
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Multimedia;
 using Ukulele;
-using Ukulele.Controllers.Alesis;
+using Ukulele.Controllers.Midi.Alesis;
 using Ukulele.PiShock;
-using static Ukulele.MathExtensions;
 
 try
 {
@@ -68,10 +67,10 @@ try
                 return;
             }
 
-            var duration = MapSevenBitNumberTo(alesisController.Duration, 1, 15);
-            var minimumWarning = MapSevenBitNumberTo(alesisController.MinimumWarning, 2, 10);
-            var maximumWarning = MapSevenBitNumberTo(alesisController.MaximumWarning, 2, 10);
-            var intensity = MapSevenBitNumberTo(alesisController.Intensity, 0, 100);
+            var duration = alesisController.Duration;
+            var minimumWarning = alesisController.MinimumWarning;
+            var maximumWarning = alesisController.MaximumWarning;
+            var intensity = alesisController.Intensity;
 
             if (minimumWarning + maximumWarning > 0)
             {

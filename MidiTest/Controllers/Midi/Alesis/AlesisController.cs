@@ -1,18 +1,17 @@
 ﻿using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using Melanchall.DryWetMidi.Common;
 using Melanchall.DryWetMidi.Core;
 
-namespace Ukulele.Controllers.Alesis;
+namespace Ukulele.Controllers.Midi.Alesis;
 
 public class AlesisController
 {
     private static readonly ImmutableHashSet<AlesisDials> Dials = ImmutableHashSet.Create(Enum.GetValues<AlesisDials>());
 
-    public SevenBitNumber Duration { get; private set; } = new(1);
-    public SevenBitNumber Intensity { get; private set; } = new(50);
-    public SevenBitNumber MinimumWarning { get; private set; } = new(1);
-    public SevenBitNumber MaximumWarning { get; private set; } = new(5);
+    public int Duration { get; private set; } = 1;
+    public int Intensity { get; private set; } = 50;
+    public int MinimumWarning { get; private set; } = 1;
+    public int MaximumWarning { get; private set; } = 5;
 
     public bool Read(MidiEvent ev)
     {
@@ -24,16 +23,16 @@ public class AlesisController
         switch (alesisEvent.Dial)
         {
             case AlesisDials.Duration:
-                Duration = alesisEvent.Value;
+                Duration = alesisEvent.Value.ToDuration();
                 break;
             case AlesisDials.Intensity:
-                Intensity = alesisEvent.Value;
+                Intensity = alesisEvent.Value.ToIntensity();
                 break;
             case AlesisDials.MinimumWarning:
-                MinimumWarning = alesisEvent.Value;
+                MinimumWarning = alesisEvent.Value.ToMinimumWarning();
                 break;
             case AlesisDials.MaximumWarning:
-                MaximumWarning = alesisEvent.Value;
+                MaximumWarning = alesisEvent.Value.ToMaximumWarning();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -1,4 +1,4 @@
-﻿namespace Ukulele.Controllers.Alesis;
+﻿namespace Ukulele.Controllers.Midi.Alesis;
 
 public enum AlesisDials
 {
