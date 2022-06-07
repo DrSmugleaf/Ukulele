@@ -50,7 +50,7 @@ try
 
     Console.Clear();
     Console.WriteLine($"Selecting {input.Name}");
-    AppDomain.CurrentDomain.ProcessExit += (sender, args) => { input.StopEventsListening(); };
+    AppDomain.CurrentDomain.ProcessExit += (_, _) => { input.StopEventsListening(); };
 
     var thread = new Thread(() =>
     {
@@ -58,7 +58,8 @@ try
         {
             if (alesisController.Read(args.Event))
             {
-                Console.WriteLine(alesisController);
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine(alesisController.ToMeters());
                 return;
             }
 
@@ -72,6 +73,11 @@ try
             var maximumWarning = alesisController.MaximumWarning;
             var intensity = alesisController.Intensity;
 
+            Console.SetCursorPosition(0, 5);
+            Console.WriteLine(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 6);
+            Console.WriteLine(new string(' ', Console.WindowWidth));
+
             if (minimumWarning + maximumWarning > 0)
             {
                 if (minimumWarning > maximumWarning)
@@ -79,17 +85,17 @@ try
                     (minimumWarning, maximumWarning) = (maximumWarning, minimumWarning);
                 }
 
-                var warning = random.Next(minimumWarning, maximumWarning);
-
-                Console.WriteLine($"Warning for {warning} seconds with {intensity} intensity");
+                var warningSeconds = random.Next(minimumWarning, maximumWarning);
 
                 client.Vibrate(duration, intensity);
-                await Task.Delay(warning * 1000);
+                await Logger.PrintWarningFor(warningSeconds, intensity);
             }
 
-            Console.WriteLine($"Shocking for {duration} seconds with {intensity} intensity");
+            Console.SetCursorPosition(0, 6);
+            Console.WriteLine($"✓ Shocking for {duration} seconds with {intensity} intensity");
             client.Shock(duration, intensity);
         };
+
         input.StartEventsListening();
     });
 

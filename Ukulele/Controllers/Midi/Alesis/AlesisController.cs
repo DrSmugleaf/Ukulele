@@ -10,7 +10,7 @@ public class AlesisController
 
     public int Duration { get; private set; } = 1;
     public int Intensity { get; private set; } = 50;
-    public int MinimumWarning { get; private set; } = 1;
+    public int MinimumWarning { get; private set; } = 2;
     public int MaximumWarning { get; private set; } = 5;
 
     public bool Read(MidiEvent ev)
@@ -41,9 +41,12 @@ public class AlesisController
         return true;
     }
 
-    public override string ToString()
+    public string ToMeters()
     {
-        return $"Duration: {Duration}, Intensity: {Intensity}, Minimum warning: {MinimumWarning}, Maximum warning: {MaximumWarning}";
+        return $"Duration:  {Duration.ToDurationMeter()}     \n" +
+               $"Min. Warn: {MinimumWarning.ToMinimumWarningMeter()}     \n" +
+               $"Max. Warn: {MaximumWarning.ToMaximumWarningMeter()}     \n" +
+               $"Intensity: {Intensity.ToIntensityMeter()}     ";
     }
 
     public static AlesisEvent? ParseEvent(MidiEvent ev)
