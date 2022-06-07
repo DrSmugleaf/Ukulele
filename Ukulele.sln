@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ukulele", "MidiTest\Ukulele.csproj", "{63E53EF8-1B5D-4519-AF58-1BEF57E73958}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ukulele", "Ukulele\Ukulele.csproj", "{63E53EF8-1B5D-4519-AF58-1BEF57E73958}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
